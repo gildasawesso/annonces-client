@@ -36,7 +36,7 @@ export class AppComponent {
 
   upload() {
     this.isBusy = true;
-    this.http.post("http://192.168.1.12:3000/upload", {buffer: this.fileBuffer})
+    this.http.post("http://api.annonce.awessome.fr/upload", {buffer: this.fileBuffer})
       .subscribe((res: any) => {
         this.isBusy = false;
         this.success = true;

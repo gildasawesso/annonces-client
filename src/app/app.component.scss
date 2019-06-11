@@ -33,6 +33,11 @@
     padding: 10px 20px;
     margin-top: 48px;
     cursor: pointer;
+
+    &:disabled {
+      background-color: rgba(0,0,0,.12);
+      color: rgba(0,0,0,.26);
+    }
   }
 
   //loading animation

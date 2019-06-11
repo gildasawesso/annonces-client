@@ -7,11 +7,14 @@
     <div class="font-weight-light">Annonce sélectionnée</div>
     <div class="file font-weight-bold">{{filename}}</div>
   </div>
-  <div *ngIf="isBusy" class="animated fadeOut faster d-flex flex-column align-items-center">
+  <div *ngIf="isBusy" class="animated faster d-flex flex-column align-items-center" [ngClass]="{'fadeOut': isBusy == false}">
     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
   </div>
-  <div *ngIf="success" class="animated tada faster d-flex flex-column align-items-center">
+  <div *ngIf="success" class="my-3 animated tada faster d-flex flex-column align-items-center">
     <img class="success" src="assets/images/success.png"/>
+  </div>
+  <div *ngIf="error" class="my-3 animated tada faster d-flex flex-column align-items-center">
+    <img class="success" src="assets/images/error.png"/>
   </div>
   <input hidden #uploader (change)="loadFile($event)" type="file"/>
   <div class="buttons d-flex justify-content-center flex-column">
@@ -19,7 +22,7 @@
       <button class="col-10 col-sm-3 mx-auto choose" (click)="selectFile()">Choose announcement</button>
     </div>
     <div class="row">
-      <button class="col-10 col-sm-3 mx-auto send" (click)="upload()">Send</button>
+      <button [disabled]="fileBuffer == null || isBusy" class="col-10 col-sm-3 mx-auto send" (click)="upload()">Send</button>
     </div>
   </div>
 </div>

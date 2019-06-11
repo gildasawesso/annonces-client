@@ -9,10 +9,11 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent {
 
   @ViewChild('uploader', {static: true}) uploader: ElementRef;
-  fileBuffer: any;
+  fileBuffer: any = null;
   filename: string;
   isBusy: boolean = false;
   success: boolean = false;
+  error: boolean = false;
 
   constructor(private http: HttpClient) {
 
@@ -21,10 +22,10 @@ export class AppComponent {
   selectFile() {
     this.uploader.nativeElement.click();
     this.success = false;
+    this.error = false;
   }
 
   loadFile(event) {
-    this.fileBuffer = null;
     let fileReader = new FileReader();
     fileReader.onload = () => {
       let content: any = fileReader.result;
@@ -36,14 +37,20 @@ export class AppComponent {
 
   upload() {
     this.isBusy = true;
-    this.http.post("http://api.annonce.awessome.fr/upload", {buffer: this.fileBuffer})
+    // this.http.post("https://api.annonce.awessome.fr/upload", {buffer: this.fileBuffer})
+    this.http.post("http://192.168.1.5:3010/upload", {buffer: this.fileBuffer})
+    // this.http.post("http://localhost:3010/upload", {buffer: this.fileBuffer})
       .subscribe((res: any) => {
         this.isBusy = false;
         this.success = true;
         this.filename = null;
-        alert(res);
+        this.fileBuffer = null;
+        alert(JSON.stringify(res));
       },err => {
-        alert(err);
+        this.isBusy = false;
+        this.filename = null;
+        this.error = true;
+        alert(JSON.stringify("Une Erreur est survenue lors de l'upload du fichier, vérifie bien l'intégrité du fichier"));
       });
   }
 }

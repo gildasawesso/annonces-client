@@ -1,5 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -37,9 +38,7 @@ export class AppComponent {
 
   upload() {
     this.isBusy = true;
-    // this.http.post("https://api.annonce.awessome.fr/upload", {buffer: this.fileBuffer})
-    this.http.post("http://192.168.1.5:3010/upload", {buffer: this.fileBuffer})
-    // this.http.post("http://localhost:3010/upload", {buffer: this.fileBuffer})
+    this.http.post(`${environment.baseUrl}/upload`, {buffer: this.fileBuffer})
       .subscribe((res: any) => {
         this.isBusy = false;
         this.success = true;
